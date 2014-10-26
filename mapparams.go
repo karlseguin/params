@@ -11,6 +11,13 @@ func (p MapParams) Set(key, value string) Params {
 	return p
 }
 
+
+func (p MapParams) Each(f func(string, value string)) {
+	for k, v := range p {
+		f(k, v)
+	}
+}
+
 func (p MapParams) Release() {
 
 }

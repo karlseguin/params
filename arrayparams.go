@@ -50,12 +50,16 @@ func (p *ArrayParams) Set(key, value string) Params {
 	return p
 }
 
-func (p *ArrayParams) toMap(key, value string) Params {
-	m := make(MapParams, p.length+1)
+func (p *ArrayParams) Each(f func(string, value string)) {
 	for i := 0; i < p.length; i++ {
 		pair := p.lookup[i]
-		m[pair.key] = pair.value
+		f(pair.key, pair.value)
 	}
+}
+
+func (p *ArrayParams) toMap(key, value string) Params {
+	m := make(MapParams, p.length+1)
+	p.Each(func(key, value string){ m[key] = value })
 	m[key] = value
 	return m
 }

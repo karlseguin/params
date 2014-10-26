@@ -6,4 +6,5 @@ type Params interface {
 	Get(key string) string
 	Set(key, value string) Params
 	Release()
+	Each(func(key, value string))
 }

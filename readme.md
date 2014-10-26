@@ -32,6 +32,18 @@ p = p.Set("feyd", "glossu")
 ## Duplicates and Delete
 Delete isn't currently supported. Setting duplicates currently is currently dissallowed (the behavior if you do this is undefined). Both of these should be resolved shortly.
 
+## Iteration
+Use the `Each(func(key, value string))` function to iterate through the params:
+
+```go
+p := New(2)
+p = p.Set("leto", "ghanima")
+p = p.Set("paul", "alia")
+p.Each(func(key, value string){
+  fmt.Println("%s = %s", key, value)
+})
+```
+
 ## Pool
 A main advantage of using an array is to have a pool:
 

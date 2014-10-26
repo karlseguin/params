@@ -44,3 +44,16 @@ func (a *ArrayParamsTests) ExpansionReleasesTheParam() {
 	Expect(len(pool.list)).To.Equal(1)
 	Expect(pool.Checkout().(*ArrayParams).length).ToEqual(0)
 }
+
+func (a *ArrayParamsTests) Iterates() {
+	p := New(10)
+	p = p.Set("leto", "ghanima")
+	p = p.Set("paul", "alia")
+	saw := make(map[string]string, 2)
+	p.Each(func(key, value string) {
+		saw[key] = value
+	})
+	Expect(saw["leto"]).To.Equal("ghanima")
+	Expect(saw["paul"]).To.Equal("alia")
+	Expect(len(saw)).To.Equal(2)
+}
