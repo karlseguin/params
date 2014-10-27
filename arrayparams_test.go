@@ -15,13 +15,20 @@ func (a *ArrayParamsTests) GetsFromEmpty() {
 	Expect(New(1).Get("baron:friends")).To.Equal("")
 }
 
-func (a *ArrayParamsTests) GetsAnValue() {
+func (a *ArrayParamsTests) GetsAValue() {
 	p := New(10)
 	p = p.Set("leto", "ghanima")
 	p = p.Set("paul", "alia")
 	Expect(p.Get("leto")).To.Equal("ghanima")
 	Expect(p.Get("paul")).To.Equal("alia")
 	Expect(p.Get("vladimir")).To.Equal("")
+}
+
+func (a *ArrayParamsTests) OverwritesAnExistingValue() {
+	p := New(10)
+	p = p.Set("leto", "ghaima")
+	p = p.Set("leto", "ghanima")
+	Expect(p.Get("leto")).To.Equal("ghanima")
 }
 
 func (a *ArrayParamsTests) ExpandsBeyondTheSpecifiedSize() {

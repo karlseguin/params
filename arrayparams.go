@@ -36,15 +36,22 @@ func (p *ArrayParams) Get(key string) string {
 }
 
 // Set the value to the specified key
-// The behavior if the key already exists is undefined
 // Set can return a new Params object better equipped to handle the large size
 // (always assign the result of Set back to the params variable, like you do with append)
 func (p *ArrayParams) Set(key, value string) Params {
+	for i := 0; i < p.length; i++ {
+		if p.lookup[i].key == key {
+			p.lookup[i].value = value
+			return p
+		}
+	}
+
 	if p.length == len(p.lookup) {
 		m := p.toMap(key, value)
 		p.Release()
 		return m
 	}
+
 	p.lookup[p.length] = struct{ key, value string }{key, value}
 	p.length += 1
 	return p
