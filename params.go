@@ -7,4 +7,5 @@ type Params interface {
 	Set(key, value string) Params
 	Release()
 	Each(func(key, value string))
+	Len() int
 }

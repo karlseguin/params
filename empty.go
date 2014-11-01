@@ -18,3 +18,7 @@ func (p EmptyParams) Each(f func(string, value string)) {
 
 func (p EmptyParams) Release() {
 }
+
+func (p EmptyParams) Len() int {
+	return 0
+}

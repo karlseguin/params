@@ -21,3 +21,7 @@ func (p MapParams) Each(f func(string, value string)) {
 func (p MapParams) Release() {
 
 }
+
+func (p MapParams) Len() int {
+	return len(p)
+}

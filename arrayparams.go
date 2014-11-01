@@ -64,6 +64,10 @@ func (p *ArrayParams) Each(f func(string, value string)) {
 	}
 }
 
+func (p *ArrayParams) Len() int {
+	return p.length
+}
+
 func (p *ArrayParams) toMap(key, value string) Params {
 	m := make(MapParams, p.length+1)
 	p.Each(func(key, value string){ m[key] = value })
