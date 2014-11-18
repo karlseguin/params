@@ -70,7 +70,7 @@ func (p *ArrayParams) Len() int {
 
 func (p *ArrayParams) toMap(key, value string) Params {
 	m := make(MapParams, p.length+1)
-	p.Each(func(key, value string){ m[key] = value })
+	p.Each(func(key, value string) { m[key] = value })
 	m[key] = value
 	return m
 }
