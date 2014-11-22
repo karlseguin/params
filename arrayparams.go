@@ -36,7 +36,7 @@ func (p *ArrayParams) Get(key string) (string, bool) {
 // Set can return a new Params object better equipped to handle the large size
 // (always assign the result of Set back to the params variable, like you do with append)
 func (p *ArrayParams) Set(key, value string) Params {
-	for i := 0; i < p.length; i++ {
+	for i, l := 0, p.length; i < l; i++ {
 		if p.lookup[i].key == key {
 			p.lookup[i].value = value
 			return p
@@ -54,15 +54,23 @@ func (p *ArrayParams) Set(key, value string) Params {
 	return p
 }
 
+// Iterate over each key value pair
 func (p *ArrayParams) Each(f func(string, value string)) {
-	for i := 0; i < p.length; i++ {
+	for i, l := 0, p.length; i < l; i++ {
 		pair := p.lookup[i]
 		f(pair.key, pair.value)
 	}
 }
 
+// Get the number of pairs
 func (p *ArrayParams) Len() int {
 	return p.length
+}
+
+// Clears the param
+func (p *ArrayParams) Clear() Params {
+	p.length = 0
+	return p
 }
 
 func (p *ArrayParams) toMap(key, value string) Params {

@@ -66,3 +66,12 @@ func (_ ArrayParamsTests) Iterates() {
 	Expect(saw["paul"]).To.Equal("alia")
 	Expect(len(saw)).To.Equal(2)
 }
+
+func (_ ArrayParamsTests) ClearsTheParam() {
+	p := New(10)
+	p = p.Set("leto", "ghanima")
+	p = p.Set("paul", "alia")
+	p.Clear()
+	Expect(p.Len()).To.Equal(0)
+	Expect(p.Get("leto")).To.Equal("", false)
+}

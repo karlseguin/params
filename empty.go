@@ -21,3 +21,7 @@ func (p EmptyParams) Release() {
 func (p EmptyParams) Len() int {
 	return 0
 }
+
+func (p EmptyParams) Clear() Params {
+	return p
+}

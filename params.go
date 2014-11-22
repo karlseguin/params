@@ -8,4 +8,5 @@ type Params interface {
 	Release()
 	Each(func(key, value string))
 	Len() int
+	Clear() Params
 }

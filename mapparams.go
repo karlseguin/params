@@ -25,3 +25,7 @@ func (p MapParams) Release() {
 func (p MapParams) Len() int {
 	return len(p)
 }
+
+func (p MapParams) Clear() Params {
+	return make(MapParams)
+}
