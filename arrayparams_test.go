@@ -11,38 +11,40 @@ func Test_ArrayParams(t *testing.T) {
 	Expectify(new(ArrayParamsTests), t)
 }
 
-func (a *ArrayParamsTests) GetsFromEmpty() {
-	Expect(New(1).Get("baron:friends")).To.Equal("")
+func (_ ArrayParamsTests) GetsFromEmpty() {
+	Expect(New(1).Get("baron:friends")).To.Equal("", false)
 }
 
-func (a *ArrayParamsTests) GetsAValue() {
+func (_ ArrayParamsTests) GetsAValue() {
 	p := New(10)
 	p = p.Set("leto", "ghanima")
 	p = p.Set("paul", "alia")
-	Expect(p.Get("leto")).To.Equal("ghanima")
-	Expect(p.Get("paul")).To.Equal("alia")
-	Expect(p.Get("vladimir")).To.Equal("")
+	p = p.Set("duncan", "")
+	Expect(p.Get("leto")).To.Equal("ghanima", true)
+	Expect(p.Get("paul")).To.Equal("alia", true)
+	Expect(p.Get("duncan")).To.Equal("", true)
+	Expect(p.Get("vladimir")).To.Equal("", false)
 }
 
-func (a *ArrayParamsTests) OverwritesAnExistingValue() {
+func (_ ArrayParamsTests) OverwritesAnExistingValue() {
 	p := New(10)
 	p = p.Set("leto", "ghaima")
 	p = p.Set("leto", "ghanima")
-	Expect(p.Get("leto")).To.Equal("ghanima")
+	Expect(p.Get("leto")).To.Equal("ghanima", true)
 }
 
-func (a *ArrayParamsTests) ExpandsBeyondTheSpecifiedSize() {
+func (_ ArrayParamsTests) ExpandsBeyondTheSpecifiedSize() {
 	p := New(1)
 	p = p.Set("leto", "ghanima")
 	p = p.Set("paul", "alia")
-	Expect(p.Get("leto")).To.Equal("ghanima")
-	Expect(p.Get("paul")).To.Equal("alia")
-	Expect(p.Get("vladimir")).To.Equal("")
+	Expect(p.Get("leto")).To.Equal("ghanima", true)
+	Expect(p.Get("paul")).To.Equal("alia", true)
+	Expect(p.Get("vladimir")).To.Equal("", false)
 	_, ok := p.(MapParams)
 	Expect(ok).ToEqual(true)
 }
 
-func (a *ArrayParamsTests) ExpansionReleasesTheParam() {
+func (_ ArrayParamsTests) ExpansionReleasesTheParam() {
 	pool := NewPool(1, 1)
 	p := pool.Checkout()
 	Expect(len(pool.list)).To.Equal(0)
@@ -52,7 +54,7 @@ func (a *ArrayParamsTests) ExpansionReleasesTheParam() {
 	Expect(pool.Checkout().(*ArrayParams).length).ToEqual(0)
 }
 
-func (a *ArrayParamsTests) Iterates() {
+func (_ ArrayParamsTests) Iterates() {
 	p := New(10)
 	p = p.Set("leto", "ghanima")
 	p = p.Set("paul", "alia")

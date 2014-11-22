@@ -4,8 +4,8 @@ var Empty EmptyParams
 
 type EmptyParams struct{}
 
-func (p EmptyParams) Get(key string) string {
-	return ""
+func (p EmptyParams) Get(key string) (string, bool) {
+	return "", false
 }
 
 func (p EmptyParams) Set(key, value string) Params {

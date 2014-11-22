@@ -3,7 +3,7 @@ package params
 
 // An interface to a key-value lookup
 type Params interface {
-	Get(key string) string
+	Get(key string) (string, bool)
 	Set(key, value string) Params
 	Release()
 	Each(func(key, value string))

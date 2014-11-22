@@ -19,7 +19,7 @@ p = p.Set("leto", "ghanima")
 fmt.Println(p.Get("leto"))
 ```
 
-It's important to note that when you put more than the specified number of pairs, the object will convert itself to a `map[string]string`. Therefore, you must re-assign the return value of `Set`, much like you do with Go's built-in `append`:
+**It's important to note that when you put more than the configured number of pairs, the object will convert itself to a `map[string]string`.** Therefore, you must re-assign the return value of `Set`, much like you do with Go's built-in `append`:
 
 ```go
 p := New(2)

@@ -2,8 +2,9 @@ package params
 
 type MapParams map[string]string
 
-func (p MapParams) Get(key string) string {
-	return p[key]
+func (p MapParams) Get(key string) (string, bool) {
+	v, k := p[key]
+	return v, k
 }
 
 func (p MapParams) Set(key, value string) Params {

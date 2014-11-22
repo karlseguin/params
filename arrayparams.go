@@ -11,9 +11,7 @@ type ArrayParams struct {
 
 // Create a new ArrayParam that can hold up to length pairs
 func New(length int) Params {
-	return &ArrayParams{
-		lookup: make([]struct{ key, value string }, length),
-	}
+	return pooled(nil, length)
 }
 
 func pooled(pool *Pool, length int) Params {
@@ -23,16 +21,15 @@ func pooled(pool *Pool, length int) Params {
 	}
 }
 
-// Get a value by key, returns "" if the key isn't found
-// case sensitive
-func (p *ArrayParams) Get(key string) string {
+// Get a value by key
+func (p *ArrayParams) Get(key string) (string, bool) {
 	for i := 0; i < p.length; i++ {
 		pair := p.lookup[i]
 		if pair.key == key {
-			return pair.value
+			return pair.value, true
 		}
 	}
-	return ""
+	return "", false
 }
 
 // Set the value to the specified key
