@@ -28,7 +28,7 @@ func NewPool(size, count int) *Pool {
 // The number of times we tried to checkout but had no available
 // params in our pool
 func (p *Pool) Misses() int64 {
-	return atomic.SwapInt64(&p.depleted, 0)
+	return atomic.SwapInt64(&p.misses, 0)
 }
 
 // Get a param from the pool or create a new one if the pool is empty
