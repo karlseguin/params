@@ -23,24 +23,21 @@ func pooled(pool *Pool, length int) Params {
 
 // Get a value by key
 func (p *ArrayParams) Get(key string) (string, bool) {
-	for i := 0; i < p.length; i++ {
-		pair := p.lookup[i]
-		if pair.key == key {
-			return pair.value, true
-		}
+	position, exists := p.indexOf(key)
+	if exists == false {
+		return "", false
 	}
-	return "", false
+	return p.lookup[position].value, true
 }
 
 // Set the value to the specified key
 // Set can return a new Params object better equipped to handle the large size
 // (always assign the result of Set back to the params variable, like you do with append)
 func (p *ArrayParams) Set(key, value string) Params {
-	for i, l := 0, p.length; i < l; i++ {
-		if p.lookup[i].key == key {
-			p.lookup[i].value = value
-			return p
-		}
+	position, exists := p.indexOf(key)
+	if exists {
+		p.lookup[position].value = value
+		return p
 	}
 
 	if p.length == len(p.lookup) {
@@ -49,7 +46,13 @@ func (p *ArrayParams) Set(key, value string) Params {
 		return m
 	}
 
-	p.lookup[p.length] = struct{ key, value string }{key, value}
+	pair := struct{ key, value string }{key, value}
+	if position != p.length {
+		copy(p.lookup[position+1:], p.lookup[position:])
+		p.lookup[position] = pair
+	} else {
+		p.lookup[position] = pair
+	}
 	p.length += 1
 	return p
 }
@@ -78,6 +81,19 @@ func (p *ArrayParams) toMap(key, value string) Params {
 	p.Each(func(key, value string) { m[key] = value })
 	m[key] = value
 	return m
+}
+
+func (p *ArrayParams) indexOf(key string) (int, bool) {
+	for i := 0; i < p.length; i++ {
+		k := p.lookup[i].key
+		if k == key {
+			return i, true
+		}
+		if k > key {
+			return i, false
+		}
+	}
+	return p.length, false
 }
 
 // Return the params to the pool
