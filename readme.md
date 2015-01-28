@@ -30,7 +30,7 @@ p = p.Set("feyd", "glossu")
 ```
 
 ## Delete
-Delete isn't currently supported.
+An item can be deleted from the set using `Delete(key string)`. The returned values are the same as `Get`, that is, the value and a boolean indicating if the value existing.
 
 ## Iteration
 Use the `Each(func(key, value string))` function to iterate through the params:

@@ -75,3 +75,33 @@ func (_ ArrayParamsTests) ClearsTheParam() {
 	Expect(p.Len()).To.Equal(0)
 	Expect(p.Get("leto")).To.Equal("", false)
 }
+
+func (_ ArrayParamsTests) DeletesFromNothing() {
+	p := New(10)
+	Expect(p.Delete("x")).To.Equal("", false)
+}
+
+func (_ ArrayParamsTests) DeletesNonExistingKey() {
+	p := New(10)
+	p.Set("leto", "ghanima")
+	Expect(p.Delete("y")).To.Equal("", false)
+}
+
+func (_ ArrayParamsTests) DeletesOneItem() {
+	p := New(10)
+	p.Set("leto", "ghanima")
+	Expect(p.Delete("leto")).To.Equal("ghanima", true)
+	Expect(p.Len()).To.Equal(0)
+}
+
+func (_ ArrayParamsTests) DeletesAnItem() {
+	p := New(10)
+	p = p.Set("leto", "ghanima")
+	p = p.Set("paul", "alia")
+	p = p.Set("duncan", "")
+	Expect(p.Delete("leto")).To.Equal("ghanima", true)
+	Expect(p.Len()).To.Equal(2)
+	Expect(p.Get("duncan")).To.Equal("", true)
+	Expect(p.Get("paul")).To.Equal("alia", true)
+	Expect(p.Get("leto")).To.Equal("", false)
+}

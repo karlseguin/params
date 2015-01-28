@@ -76,6 +76,20 @@ func (p *ArrayParams) Clear() Params {
 	return p
 }
 
+// Delete a value by key
+func (p *ArrayParams) Delete(key string) (string, bool) {
+	position, exists := p.indexOf(key)
+	if exists == false {
+		return "", false
+	}
+	value := p.lookup[position].value
+	for i := position + 1; i < p.length; i++ {
+		p.lookup[i-1] = p.lookup[i]
+	}
+	p.length--
+	return value, true
+}
+
 func (p *ArrayParams) toMap(key, value string) Params {
 	m := make(MapParams, p.length+1)
 	p.Each(func(key, value string) { m[key] = value })

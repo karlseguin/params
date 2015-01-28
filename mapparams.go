@@ -12,6 +12,14 @@ func (p MapParams) Set(key, value string) Params {
 	return p
 }
 
+func (p MapParams) Delete(key string) (string, bool) {
+	value, exists := p.Get(key)
+	if exists {
+		delete(p, key)
+	}
+	return value, exists
+}
+
 func (p MapParams) Each(f func(string, value string)) {
 	for k, v := range p {
 		f(k, v)

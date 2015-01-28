@@ -22,6 +22,10 @@ func (p EmptyParams) Len() int {
 	return 0
 }
 
+func (p EmptyParams) Delete(key string) (string, bool) {
+	return "", false
+}
+
 func (p EmptyParams) Clear() Params {
 	return p
 }
