@@ -7,9 +7,9 @@ func (p MapParams) Get(key string) (string, bool) {
 	return v, k
 }
 
-func (p MapParams) Set(key, value string) Params {
+func (p MapParams) Set(key, value string) bool {
 	p[key] = value
-	return p
+	return true
 }
 
 func (p MapParams) Delete(key string) (string, bool) {
@@ -26,14 +26,13 @@ func (p MapParams) Each(f func(string, value string)) {
 	}
 }
 
-func (p MapParams) Release() {
-
-}
-
 func (p MapParams) Len() int {
 	return len(p)
 }
 
-func (p MapParams) Clear() Params {
-	return make(MapParams)
+func (p MapParams) Clear() {
+}
+
+func (p MapParams) ToMap(key, value string) params {
+	return p
 }

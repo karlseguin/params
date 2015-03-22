@@ -8,7 +8,7 @@ import (
 type Pool struct {
 	misses int64
 	size   int
-	list   chan Params
+	list   chan *Params
 }
 
 // Create a new pool of count params.
@@ -17,7 +17,7 @@ type Pool struct {
 func NewPool(size, count int) *Pool {
 	pool := &Pool{
 		size: size,
-		list: make(chan Params, count),
+		list: make(chan *Params, count),
 	}
 	for i := 0; i < count; i++ {
 		pool.list <- pooled(pool, size)
@@ -32,7 +32,7 @@ func (p *Pool) Misses() int64 {
 }
 
 // Get a param from the pool or create a new one if the pool is empty
-func (p *Pool) Checkout() Params {
+func (p *Pool) Checkout() *Params {
 	select {
 	case item := <-p.list:
 		return item
