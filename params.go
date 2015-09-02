@@ -3,7 +3,7 @@ package params
 
 // An interface to a key-value lookup
 type params interface {
-	Get(key string) (string, bool)
+	GetIf(key string) (string, bool)
 	Set(key, value string) bool
 	ToMap(key, value string) params
 	Delete(key string) (string, bool)
@@ -34,8 +34,13 @@ func pooled(pool *Pool, length int) *Params {
 	}
 }
 
-func (p *Params) Get(key string) (string, bool) {
-	return p.current.Get(key)
+func (p *Params) Get(key string) string {
+	value, _ := p.GetIf(key)
+	return value
+}
+
+func (p *Params) GetIf(key string) (string, bool) {
+	return p.current.GetIf(key)
 }
 
 func (p *Params) Set(key, value string) {

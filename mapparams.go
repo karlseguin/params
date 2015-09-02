@@ -2,7 +2,7 @@ package params
 
 type MapParams map[string]string
 
-func (p MapParams) Get(key string) (string, bool) {
+func (p MapParams) GetIf(key string) (string, bool) {
 	v, k := p[key]
 	return v, k
 }
@@ -13,7 +13,7 @@ func (p MapParams) Set(key, value string) bool {
 }
 
 func (p MapParams) Delete(key string) (string, bool) {
-	value, exists := p.Get(key)
+	value, exists := p.GetIf(key)
 	if exists {
 		delete(p, key)
 	}

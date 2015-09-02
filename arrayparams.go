@@ -9,7 +9,7 @@ type ArrayParams struct {
 }
 
 // Get a value by key
-func (p *ArrayParams) Get(key string) (string, bool) {
+func (p *ArrayParams) GetIf(key string) (string, bool) {
 	position, exists := p.indexOf(key)
 	if exists == false {
 		return "", false
